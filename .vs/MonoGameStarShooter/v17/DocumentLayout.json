@@ -1,0 +1,40 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\reps\\aa\\Met\\MonoGameStarShooter\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F1F15782-E403-4511-89D7-4F61C6E865A0}|MonoGameStarShooter\\MonoGameStarShooter.csproj|e:\\reps\\aa\\met\\monogamestarshooter\\monogamestarshooter\\content\\content.mgcb||{3EC6CBD1-65BD-4B26-A758-3B207D048872}",
+      "RelativeMoniker": "D:0:0:{F1F15782-E403-4511-89D7-4F61C6E865A0}|MonoGameStarShooter\\MonoGameStarShooter.csproj|solutionrelative:monogamestarshooter\\content\\content.mgcb||{3EC6CBD1-65BD-4B26-A758-3B207D048872}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Content.mgcb",
+              "DocumentMoniker": "E:\\reps\\aa\\Met\\MonoGameStarShooter\\MonoGameStarShooter\\Content\\Content.mgcb",
+              "RelativeDocumentMoniker": "MonoGameStarShooter\\Content\\Content.mgcb",
+              "ToolTip": "E:\\reps\\aa\\Met\\MonoGameStarShooter\\MonoGameStarShooter\\Content\\Content.mgcb",
+              "RelativeToolTip": "MonoGameStarShooter\\Content\\Content.mgcb",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-04-07T16:12:49.371Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
