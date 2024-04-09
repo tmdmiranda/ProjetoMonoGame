@@ -15,3 +15,9 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 * Melhorar o teu jogo usando ondas de inimigos através de algoritmos.
 * Desenvolver uma interface de utilizador para garantir que o teu jogo pode ser executado infinitamente.
 * Comprimir o teu jogo num ficheiro ZIP para enviar às pessoas para o jogarem.
+
+### Classe Game1.cs
+* Esta é a classe principal do jogo que herda a classe "game" proveniento do monogame, vai ser nesta classe que vai conter os métodos para inicializações, carregar algum tipo de contéudo, atualização e para a arte do jogo.
+* Dentro da classe, existem dois campos privados: "private GraphicsDeviceManager _graphics" que vai fazer o gerenciamento da exibição gráfica do jogo e "private SpriteBatch _spriteBatch" que vai fazer o gerenciamento para carregar as sprites para o jogo.
+* No construtor Game1 vai ser usado para inicializar o jogo através da configuração dos dispositivos gráficos, pois ele vai definir o diretório do conteúdo para o carregamento dos recursos e vai tornar o mouse visível, e através do "GameManager.cs" vai controlar o tamanho da janela do jogo com medidas já inicializadas.
+* Como todos os projetos, existe o método "Initialize" para ser chamado uma vez no início do jogo para executar qualquer atualização que tenha sido feita ao jogo.
