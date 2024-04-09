@@ -1,18 +1,17 @@
 # Star Shooter Readme
 
-### By: Alex Jeter and Zachary Mendoza
+### Autores do jogo: Alex Jeter and Zachary Mendoza
+### Trabalho realizado por: Tiago Miranda-27937;Gonçalo Araújo-27928
 
-This repository is set on a tutorial game created by Alex and Zach to bring an easier bridge from beginner to intermediate coding with Monogame. By following this tutorial you will be able to create your own game that deals with; Sprites, classes, objects, collisions, formatting, and even packaging your game to send to friends.
-#### More in detail, this tutorial will show you how to:
+O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma detalhada e mais simples de como uma pessoa que estivesse a fazer um jogo pela primeira vez em monogame pudesse seguir os passos deles e conseguir criar o seu próprio jogo, onde vai ter de ligar com as Sprites, as classes, os objetos, as colisões, o formato do jogo e até uma forma de ao fim conseguir enviar o seu jogo para os amigos.
+#### Em mais detalhe, o que este tutorial nos consegue mostrar é o seguinte:
 
-* Create your first Monogame environment in Visual Studio 2022
-* Create organization classes as good practice of software engineering
-* Learn how to utilize sprites and handle them in your game
-* Make new methods and develop good coding habits
-* Learn to practice using non global variables for better management
-* Create collisions and delete entities that are destroyed
-* Enhance your game using waves of enemies through algorithms
-* Create a user interface to ensure your game can run infinitely
-* Package your game to a ZIP file to send to people who want to play your game
-
-This is a great beginner tutorial if you want to understand how the Monogame templates work and if you want to enhance your game development skills.
+*Criar o teu primeiro projeto de Monogame no Visual Studio 2022.
+*Desenvolver classes de organização como uma boa prática programação.
+*Aprender a utilizar sprites e a manipulá-los no jogo.
+*Criar novos métodos e desenvolver bons hábitos de programação.
+*Aprender a usar variáveis não globais para uma melhor gestão.
+*Implementar colisões e remover entidades que forem destruídas.
+*Melhorar o teu jogo usando ondas de inimigos através de algoritmos.
+*Desenvolver uma interface de utilizador para garantir que o teu jogo pode ser executado infinitamente.
+*Comprimir o teu jogo num ficheiro ZIP para enviar às pessoas para o jogarem.
