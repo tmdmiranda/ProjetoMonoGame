@@ -54,3 +54,5 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 ## SpriteArt.cs
 * A classe SpriteArt vai ser responsável pela criação das referências desejadas para as sprites, texturas do jogo, música e os efeitos sonoros do jogo.
   - Nesta classe existe uma única função, a função "Load" que vai ser pública e estática e que vai ser através dela que serão carregadas as sprites, texturas e os efeitos sonoros desejados dos ficheiros e os vai atribuir aos objetos criados na classe que como são do tipo "private set" após a sua inicialização os seus valores não podem ser alterados.
+
+## Entity.cs
