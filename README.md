@@ -21,3 +21,26 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 * Dentro da classe, existem dois campos privados: "private GraphicsDeviceManager _graphics" que vai fazer o gerenciamento da exibição gráfica do jogo e "private SpriteBatch _spriteBatch" que vai fazer o gerenciamento para carregar as sprites para o jogo.
 * No construtor Game1 vai ser usado para inicializar o jogo através da configuração dos dispositivos gráficos, pois ele vai definir o diretório do conteúdo para o carregamento dos recursos e vai tornar o mouse visível, e através do "GameManager.cs" vai controlar o tamanho da janela do jogo com medidas já inicializadas.
 * Como todos os projetos, existe o método "Initialize" para ser chamado uma vez no início do jogo para executar qualquer atualização que tenha sido feita ao jogo.
+
+### Estruturamento do projeto
+
+* O projeto está estruturado de maneira onde a Principal classe encontra-se na root do projeto, e dentro da pasta "Components" encontram-se todas as classes necessarias para o jogo
+
+* Dentro da pasta tem:
+  -Bullet.cs
+  -Enemy.cs
+  -Entity.cs
+  -EntityCollection.cs
+  -GameManager.cs
+  -Player.cs
+  -SpriteArt.cs
+  -UserInterface.cs
+  -WaveManager.cs
+
+## GameManager.cs
+*A classe GameManager contem variáveis que controlam a escala dos sprites e o tamanho da janela da aplicação, tambem armazena as propriedades das Entidades dentro do jogo, tais como velocidade, saúde, etc..
+
+*O GameManager é uma classe estática, o que significa que as suas variáveis podem ser usadas sem ter de criar uma inicializar a classe como um objeto.
+-A variável "scale" permite alterar uniformemente a escala dos sprites e dos movimentos. Por defeito, está definida para escalar para 75% do tamanho original do sprite.
+-As variáveis "screenWidth" e "screenHeight" permitem-te alterar o tamanho da janela da aplicação.
+-Todos estes valores podem ser modificados de acordo com as necessidades para o jogo
