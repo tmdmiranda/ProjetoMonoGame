@@ -40,7 +40,10 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 ## GameManager.cs
 *A classe GameManager contem variáveis que controlam a escala dos sprites e o tamanho da janela da aplicação, tambem armazena as propriedades das Entidades dentro do jogo, tais como velocidade, saúde, etc..
 
-*O GameManager é uma classe estática, o que significa que as suas variáveis podem ser usadas sem ter de criar uma inicializar a classe como um objeto.
+* O GameManager é uma classe estática, o que significa que as suas variáveis podem ser usadas sem ter de criar uma inicializar a classe como um objeto.
+  
 -A variável "scale" permite alterar uniformemente a escala dos sprites e dos movimentos. Por defeito, está definida para escalar para 75% do tamanho original do sprite.
+
 -As variáveis "screenWidth" e "screenHeight" permitem-te alterar o tamanho da janela da aplicação.
+
 -Todos estes valores podem ser modificados de acordo com as necessidades para o jogo
