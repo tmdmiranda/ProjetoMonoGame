@@ -30,15 +30,15 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 * O projeto está estruturado de maneira onde a Principal classe encontra-se na root do projeto, e dentro da pasta "Components" encontram-se todas as classes necessarias para o jogo
 
 * Dentro da pasta tem:
-  -Bullet.cs
-  -Enemy.cs
-  -Entity.cs
-  -EntityCollection.cs
-  -GameManager.cs
-  -Player.cs
-  -SpriteArt.cs
-  -UserInterface.cs
-  -WaveManager.cs
+  - Bullet.cs
+  - Enemy.cs
+  - Entity.cs
+  - EntityCollection.cs
+  - GameManager.cs
+  - Player.cs
+  - SpriteArt.cs
+  - UserInterface.cs
+  - WaveManager.cs
 
 ## GameManager.cs
 * A classe GameManager contem variáveis que controlam a escala dos sprites e o tamanho da janela da aplicação, tambem armazena as propriedades das Entidades dentro do jogo, tais como velocidade, saúde, etc..
