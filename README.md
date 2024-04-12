@@ -60,3 +60,8 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - Contém o método "update" que é responsável pela atualização do estado das entidades.
   - O método "Draw" que vai servir basicamente para desenhar as entidades nas suas respetivas posições, com a sua devida cor, escala, e os efeitos.
   - E criaram os métodos "creatHitBox" e "updateHitBox" em que um vai criar, tal como o nome indica, as colisões do player com os inimigos ateravés da escala e da posição e, em seguida sempre que ocorrer essa colisão o outro método vai atualizar essa área de colisão.
+* Para haver um controlo de todos os recursos que as entidades vão necessitar dentro jogo quando está a ser executado, como os desenhos, as texturas e tudo mais, os autores criaram a classe "EntityManager", para assim conseguirem lidar e controlar as funcionalidades das entidades quando o jogo está a ser executado.
+  - Criaram uma lista para guardar e criar as entidades no ecrã, e de seguida adicionaram na lista as entidades que vão ser usadas para o jogo através de uma função add.
+  - Através do método draw criado na classe "Entity.cs", vai ser possivel desenhar as entidades para a lista.
+  - Após isso, é criado o método "update" com um loop for para percorrer todas as entidades que estiverem na lista e depois usar o update para cada entidade.
+  - E assim como os métodos já estão criados, os mesmos vão ser usados na classe principal "Game1" para assim serem adicionadas as funcionalidades para o jogo. 
