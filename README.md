@@ -44,11 +44,8 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 * A classe GameManager contem variáveis que controlam a escala dos sprites e o tamanho da janela da aplicação, tambem armazena as propriedades das Entidades dentro do jogo, tais como velocidade, saúde, etc..
 
 * O GameManager é uma classe estática, o que significa que as suas variáveis podem ser usadas sem ter de criar uma inicializar a classe como um objeto.
-  
   - A variável "scale" permite alterar uniformemente a escala dos sprites e dos movimentos. Por defeito, está definida para escalar para 75% do tamanho original do sprite.
-
   - As variáveis "screenWidth" e "screenHeight" permitem-te alterar o tamanho da janela da aplicação.
-
   - Todos estes valores podem ser modificados de acordo com as necessidades para o jogo
 
 ## SpriteArt.cs
@@ -60,8 +57,19 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - Contém o método "update" que é responsável pela atualização do estado das entidades.
   - O método "Draw" que vai servir para desenhar as entidades nas suas respetivas posições, com a sua devida cor, escala, e os efeitos de cada.
   - E foram criados os métodos "createHitBox" e "updateHitBox" em que um vai criar, tal como o nome indica, as colisões do player com os inimigos ateravés da escala e da posição e, em seguida sempre que ocorrer essa colisão o outro método vai atualizar essa área de colisão.
-* Para haver um controlo de todos os recursos que as entidades vão necessitar dentro jogo quando está a ser executado, como os desenhos, as texturas, os autores criaram a classe "EntityManager", para assim conseguirem lidar e controlar as funcionalidades das entidades quando o jogo está a ser executado, para isso:
-  - Criaram uma lista para guardar e criar as entidades que vão ser representadas no ecrã, e de seguida adicionaram na lista as entidades que vão ser usadas para o jogo através de uma função add.
-  - Através do método draw criado na classe "Entity.cs", vai ser possivel desenhar as entidades para a lista.
-  - Após isso, é criado o método "update" com um loop for para percorrer todas as entidades que estiverem na lista e depois usar o update para cada entidade.
-  - E assim como os métodos já estão criados, os mesmos vão ser chamados na classe principal "Game1" para assim serem adicionadas as funcionalidades para o jogo. 
+* Para haver um controlo de todos os recursos que as entidades vão necessitar dentro jogo quando está a ser executado, como os desenhos, as texturas, os autores criaram a classe "EntityCollections.cs", para assim conseguirem lidar e controlar as funcionalidades das entidades quando o jogo está a ser executado, para isso:
+  - Esta classe está responsável por gerir e manipular todas a entidades utilizadas no jogo, incluindo o jogador, os projéteis e pos inimigos e estes vão estar relacionados através das listas estáticas criadas pelos autores do jogo.
+  - Através do método "Initialize" que vai ser responsável por incializar as entidades do jogo, ele vai verificar se essas entidades já foram inicializadas anteriormente para assim evitar múltiplas incializações, se as mesmas ainda não tiverem sido incializadas, vai ser criada uma instância do jogador com a sua textura e sua posição inicial no centro do ecrã de jogo, e após isso é adicionado à lista de entidades através do método "Instantiate" e vai definir a variável global "hasInitialized" como "true", pois ela no inicio do código estava inicializada como "false".
+  - O método "Instantiate" vai ser receber como parâmetro a entidade que vai ser adicionada na lista, por isso o seu papel fundamental é adicionar a nova entidade à lista, ela vai adicionar a entidade à lista "geral" das entidades e depois através de duas verificações, caso seja um projétil vai ser adicionado também à lista dos projéteis e caso seja um inimigo é adicionado na lista dos inimigos.
+  - Com o método "Draw" que vai ser responsável por desenhar as entidades no ecrã do jogo em que vai utilizar um loop for para percorrer as entidades na lista das entidades, e vai chamar o método "Draw" e passar como parâmetro o "SpriteBatch" para desenhar cada entidade no ecrã.
+  - Como já é costume mais uma vez é usado o método "update" que vai ser respinsável por atualizar as entidades do jogo, através de um loop for para percorrer a lista das entidades e assim chamar o "update" para atualizar o estado de cada entidade, após essa atualização vai remover das listas todas a entidades que tiverem definidades como falso usando as funções "Where" e "ToList", e com uma verificação vai detetar se ocorreu colisões entre os inimigos e os projéteis para assim realizar a subtração da vida dos inimigos.
+  - O método "ClearEntities" vai ser o método que tal como o nome indica vai limpar todas a entidades do jogo, e para isso vai ser utilizado um loop for para percorrer mais uma vez a lista das entidades e caso seja um inimigo ou projétil o seu estado "isActive" vai definido como falso e vão ser limpos das listas através da função "Clear".
+
+## Player.cs
+* Como a classe anterior foi criada como uma classe abstrata, agora nesta classe usaram alguns métodos e funções dessa classe, neste caso o player vai herdar as texturas e a posição entre outros.
+* A classe player vai ter os campos "sidespeed" que vai ser usado para determinar a velocidade com que o player se move na horizontal neste caso para a esquerda ou para a direita e essa variavél está declarada no "GameManager", o campo "cooldownRemaining" que vai controlar o tempo restante entre cada disparo do player, o campo "fireRate" que vai definir a taxa de tiros que são necessários entre cada tiro, e o campo "hp" que como toda a gente que joga videojogos sabe que isso se refere à vida do player, que no caso de chegar a 0 o jogo vai encerrar e dar uma mensagem de gameover.
+* O construtor player vai receber os parâmetros da textura do jogador através do "image" e a sua posição inicial através do "initialPosition".
+* No método update, primeiro os criadores fizeram uma verificação da hp do player, que se a mesma for menor ou igual a 0, o jogo vai acabar, vai dar display da sprite do gameover e também vai dar a música que foi definida para esse momento.
+* Após isso, fazem as verificações para o movimento do player dentro do jogo, definem as teclas para o movimento como a tecla "A" e "LEFT" para o player ir para a esquerda caso sejam pressionadas e dentro dessa verificação fazem uma outra para o player não sair fora da janela de jogo e ir atualizando a sua posição, e repetem o mesmo processo para o movimento para a direita, mas para esse atribuiram as teclas "D" e "RIGHT".
+* E ainda fazem mais uma verificação para quando o player for disparar os projéteis e o tempo de cooldown o permitir, em que a tecla definida para o disparo foi o "SPACE", e sempre que o cooldown o permitir vai ser criado um novo projétil na posição do jogador e seja assim disparado e após isso o tempo de cooldown vai ser reiniciado permitindo assim ao player disparar em intervalos de tempo regulares, e sempre que houver um disparo o seu som também vai ser reproduzido.
+
