@@ -78,3 +78,16 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - Nesta classe é que vai ser definida a velocidade das balas quando são disparadas na vertical.
   - O primeiro construtor vai receber a posição inicial e a textura da bala, a textura vai ser atribuida ao campo correspondente na classe que é a pos, e a textura vai ser atribuida ao campo texture, vai ajustar a escala da posição da bala para que a mesma esteja centrada na posição inicial e em seguida vai chamar o método "CreateHitbox" para criar a área de colisão da bala.
   - No método "Update" que vai ser responsável pela a atualização da bala a cada frame, vai mover o projétil na vertical atualizando a sua posição de acordo com a sua velocidade, através de uma verificação se o projétil atingir o limite superior dp ecrã o seu estado vai passar a ser falso para assim o mesmo ser removido do jogo e após isso vai chamar o método "updateHitbox" para atualizar a área de colisão da bala de acordo com a sua nova posição.
+ 
+  ## Enemy.cs
+* Herdando a Classe "Entity", podemos criar a classe "Enemy.cs", primeiramente o mais importante será o seu construtor. O construtor é uma peça importante da classe Inimigo, pois permite criar diferentes tipos de inimigos sem ter de reescrever código.
+  - O construtor recebe quatro parâmetros e executa as seguintes ações:
+    - Define a posição inicial do inimigo numa zona no topo da cena de jogo, de onde o inimigo se irá deslocar para baixo (pos).
+    - Recebe uma imagem para usar como textura (texture).
+    - Define uma nova velocidade de movimento para o inimigo (dropSpeed).
+    - Define a quantidade máxima de pontos de vida do inimigo (health).
+* Para além disso, o "Enemy" terá de se deslocar para baixo no espaço, para isso ele segue um simples Update()
+    - Primeiro, ele verifica se a vida atual é igual a 0. Se for, o inimigo remove-se a si próprio.
+    - De seguida, verificamos se o Inimigo está fora do campo de jogo enquanto se move para baixo. Se estiver, remove-se a si próprio.
+    - Por fim, a posição do Inimigo é atualizada somando a velocidade á sua posiçpara continuar o seu movimento descendente.
+- De seguida a classe "Enemy" será instanciada da mesma forma que a classe "Bullet" no "EntityCollections.cs" para poder ser um maior controlo dos inimigos.
