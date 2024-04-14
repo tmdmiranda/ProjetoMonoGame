@@ -86,8 +86,8 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
     - Recebe uma imagem para usar como textura (texture).
     - Define uma nova velocidade de movimento para o inimigo (dropSpeed).
     - Define a quantidade máxima de pontos de vida do inimigo (health).
-* Para além disso, o "Enemy" terá de se deslocar para baixo no espaço, para isso ele segue um simples Update()
+* Para além disso, o "Enemy" terá de se deslocar para baixo no espaço, para isso ele segue um simples Update:
     - Primeiro, ele verifica se a vida atual é igual a 0. Se for, o inimigo remove-se a si próprio.
     - De seguida, verificamos se o Inimigo está fora do campo de jogo enquanto se move para baixo. Se estiver, remove-se a si próprio.
-    - Por fim, a posição do Inimigo é atualizada somando a velocidade á sua posiçpara continuar o seu movimento descendente.
-- De seguida a classe "Enemy" será instanciada da mesma forma que a classe "Bullet" no "EntityCollections.cs" para poder ser um maior controlo dos inimigos.
+    - Por fim, a posição do Inimigo é atualizada somando a velocidade à sua posição para continuar o seu movimento descendente.
+- De seguida a classe "Enemy" será instanciada da mesma forma que a classe "Bullet" no "EntityCollections.cs" para poder ter um maior controlo dos inimigos.
