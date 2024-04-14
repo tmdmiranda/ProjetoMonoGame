@@ -91,7 +91,8 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
     - De seguida, verificamos se o Inimigo está fora do campo de jogo enquanto se move para baixo. Se estiver, remove-se a si próprio.
     - Por fim, a posição do Inimigo é atualizada somando a velocidade à sua posição para continuar o seu movimento descendente.
 - De seguida a classe "Enemy" será instanciada da mesma forma que a classe "Bullet" no "EntityCollections.cs" para poder ter um maior controlo dos inimigos.
-ESCREVE O QUE QUERIAS DAS COLISÕES AQUI!!!
+
+ESCREVE O QUE QUERIAS DAS COLISÕES AQUI!!! (antes do wavemanager para ficar por ordem)
 
 ## WaveManager.cs
 * Esta classe vai ser responsável por adicionar os inimigos de forma automática de forma a que não seja necessário adicioná-los manualmente. Vai se certificar da lógica usada para o aparecimento das várias ondas de inimigos no decorrer do jogo ao aumentar o número de inimigos, a taxa de aparecimento e as ondas.
