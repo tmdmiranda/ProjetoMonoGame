@@ -65,6 +65,15 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - Como já é costume mais uma vez é usado o método "update" que vai ser responsável por atualizar as entidades do jogo, através de um loop for para percorrer a lista das entidades e assim chamar o "update" para atualizar o estado de cada entidade, após essa atualização vai remover das listas todas a entidades que tiverem definidades como falso usando as funções "Where" e "ToList", e com uma verificação vai detetar se ocorreu colisões entre os inimigos e os projéteis para assim realizar a subtração da vida dos inimigos.
   - O método "ClearEntities" vai ser o método que tal como o nome indica vai limpar todas a entidades do jogo, e para isso vai ser utilizado um loop for para percorrer mais uma vez a lista das entidades e caso seja um inimigo ou projétil o seu estado "isActive" vai definido como falso e vão ser limpos das listas através da função "Clear".
 
+## Colisões e Hitboxes
+  -  A ideia de adicionar colisões é criar caixas em torno do sprite que determinam a área de colisão, sempre que essas duas caixas se sobrepuserem, uma função será chamada e qualquer lógica relacionada a colisões será aplicada.
+  -  Para aplicar a lógica das hitboxes, a classe entity vai possuir no seu construtor a hitbox, e terá duas funções onde criará a hitbox e a vai atualizar de acordo com a posição da entindade que a possui.
+  -  As dimensões da hitbox vão ser definidas automaticamente pelas dimensões da sprite.
+  -  Após isso, dentro dos Construtores dos objetos que queremos que possuam uma hitbox, chama a função para criar a hitbox, e na respetiva função update será chamado a funcão para dar update à posição dela de acordo com a posição da entidade.
+  - Com isso, a função que verifica se hã colisões pode ser chamada no update, esta funciona iterando a verificar se alguma das hitboxes existentes colidiram. Assim, podemos subtraír a vida sempre que há uma colisão entre a bala e um inimigo, e com isso adicionar também os efeitos de colisão
+  - Efeitos de Colisão vão ser aplicados primeiramente definindo na class "Entity.cs", a cooldown do hit "hitCooldown", as frames que o "hitFrames" "Hit" dura, a distância de knockback que o inimigo leva "hitKnockbackMultiplier" e o "ColorTint" que vai definir a cor predefinida do sprite, esta sendo branca.
+      - Com o tint definido em todas as entidade, quando a colisão é observada, é chamada a função onHit e onHitEffect. o cooldown é definido, e durante a duração desse cooldown a função Effect aplica o knockback e o muda a cor do sprite para vermelho.
+
 ## Player.cs
 * Como a classe anterior foi criada como uma classe abstrata, agora nesta classe usaram alguns métodos e funções dessa classe, neste caso o player vai herdar as texturas e a posição entre outros.
 * A classe player vai ter os campos "sidespeed" que vai ser usado para determinar a velocidade com que o player se move na horizontal neste caso para a esquerda ou para a direita e essa variavél está declarada no "GameManager", o campo "cooldownRemaining" que vai controlar o tempo restante entre cada disparo do player, o campo "fireRate" que vai definir a taxa de tiros que são necessários entre cada tiro, e o campo "hp" que como toda a gente que joga videojogos sabe que isso se refere à vida do player, que no caso de chegar a 0 o jogo vai encerrar e dar uma mensagem de gameover.
@@ -91,9 +100,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
     - De seguida, verificamos se o Inimigo está fora do campo de jogo enquanto se move para baixo. Se estiver, remove-se a si próprio.
     - Por fim, a posição do Inimigo é atualizada somando a velocidade à sua posição para continuar o seu movimento descendente.
 - De seguida a classe "Enemy" será instanciada da mesma forma que a classe "Bullet" no "EntityCollections.cs" para poder ter um maior controlo dos inimigos.
-
-ESCREVE O QUE QUERIAS DAS COLISÕES AQUI!!! (antes do wavemanager para ficar por ordem)
-
+  
 ## WaveManager.cs
 * Esta classe vai ser responsável por adicionar os inimigos de forma automática de forma a que não seja necessário adicioná-los manualmente. Vai se certificar da lógica usada para o aparecimento das várias ondas de inimigos no decorrer do jogo ao aumentar o número de inimigos, a taxa de aparecimento e as ondas.
   - Para começar foram adicionadas variáveis na classe "GameManager" que vai controlar a vida que os inimigos têm e a velocidade que se vão puder mover.
