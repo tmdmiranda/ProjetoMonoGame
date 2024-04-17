@@ -23,11 +23,31 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 
 ## GameManager.cs
 * A classe GameManager contem variáveis que controlam a escala dos sprites e o tamanho da janela da aplicação, tambem armazena as propriedades das Entidades dentro do jogo, tais como velocidade, saúde, etc..
-
 * O GameManager é uma classe estática, o que significa que as suas variáveis podem ser usadas sem ter de criar uma inicializar a classe como um objeto.
   - A variável "scale" permite alterar uniformemente a escala dos sprites e dos movimentos. Por defeito, está definida para escalar para 75% do tamanho original do sprite.
-  - As variáveis "screenWidth" e "screenHeight" permitem-te alterar o tamanho da janela da aplicação.
-  - Todos estes valores podem ser modificados de acordo com as necessidades para o jogo
+  - As variáveis "screenWidth" e "screenHeight" permitem alterar o tamanho da janela da aplicação.
+  - Todos estes valores podem ser modificados de acordo com as necessidades para o jogo.
+
+## Código
+    static class GameManager
+    {
+        public static float SCALE = 0.75f;
+        //screenWidth and screenHeight will control the size of the window
+        public static int screenWidth = 720;
+        public static int screenHeight = 1080;
+
+        public static int playerSpeed = 5;
+        public static int playerHealth = 5;
+
+
+        public static int level1Health = 2;
+        public static float level1Speed = 3f;
+
+        public static int level2Health = 3;
+        public static float level2Speed = 5f;
+
+        public static bool inGame = false;
+    }
 
 ## SpriteArt.cs
 * A classe SpriteArt vai ser responsável pela criação das referências desejadas para as sprites, texturas do jogo, música e os efeitos sonoros do jogo.
