@@ -6,6 +6,13 @@
 
 O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma detalhada e mais simples de como uma pessoa que estivesse a fazer um jogo pela primeira vez em monogame pudesse seguir os passos deles e conseguir criar o seu próprio jogo, onde vai ter de lidar com as Sprites, as classes, os objetos, as colisões, o formato do jogo e até uma forma de ao fim conseguir enviar o seu jogo para os amigos.
 
+## Como jogar
+* Teclas:
+  - Tecla ENTER para iniciar o jogo
+  - Tecla A para mover para a esquerda ou tecla seta ESQUERDA
+  - Tecla D para mover para a esquerda ou tecla seta DIREITA
+  - Tecla SPACE para disparar
+
 ### Estruturamento do projeto
 
 * O projeto está estruturado de maneira onde a Principal classe encontra-se na root do projeto, e dentro da pasta "Components" encontram-se todas as classes necessarias para o jogo
@@ -171,6 +178,30 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - No método "InitializeWave" que tal como o nome indica vai servir para inicializar uma nova onde de inimigos, vai ser feita uma verificação usando a classe "EntityCollections" para saber se não há inimigos restantes no jogo e se todos os inimigos foram eliminados na onda que o jogo se encontrar, se assim for o número da onda vai ser incrementado e o número máximo de inimigos para a onda seguinte vai ser atualizado e aumentado em 2 unidades.
   - Através do método "Reset" que mais uma vez como o nome indica vai servir para resetar todos os valores que estejam relacionados com as ondas do jogo. Vai ser feita a definição do número da onda como zero, o número de inimigos restantes por gerar também vai ser zero e vai resetar o número máximo de inimigos outra vez para dois.
   - Com o método "Update" que vai ser chamado a cada frame do jogo para atualizar o gerenciamento das ondas, vai chamar o método criado "InitializeWave" para iniciar uma nova onda se necessário, em seguida verifica se o "spawnDelay" é zero e se não há mais inimigos por gerar, se isso se verificar, é usada uma outra verificação para gerar os inimigos em que todos os que forem par são inimigos nível 1 e os inimigos com número ímpar são nível 2, ao gerar o inimgo vai subtrair um nos inimigos por gerar e de seguida gera o inimigo através do "EntityCollections" de acordo com o seu nível e vai resetar o "spawnDelay" para o "spawnRate", e através de outra verificação se o "spawnDelay" não for zero vai ser subtraido um. Vai repetir esse processo a cada frame de forma a garantir que todos os inimigos sejam gerados de acordo com as configuarções já definidas.
+
+## UserInterface.cs
+* Vai ser responsável por fazer a interface do user no jogo, através de dois métodos:
+  - HomeScreen e o gameScreen, o método HomneScreen vai exibir a sprite que aparece antes do jogo iniciar se o jogo ainda não tiver iniciado vai ser exibida uma mensagem para o jogador pressionar a tecla "ENTER" para o iniciar, o método gameScreen vai exibir o ecrã de jogo enquanto o mesmo está a decorrer mostrando assim a interface do jogo como a vida do player, o número da wave em que se encontra e o seu score, obtém as informações sobre o score do player através da classe "EntityCollections" e o número da onda através do "WaveManager".
+
+## Código
+
+    public static bool hasStarted = false;
+    private static string titleString = "My First Game!";
+    public static void HomeScreen(SpriteBatch _spriteBatch, SpriteFont font)
+    {
+        if (!hasStarted) titleString = "My First Game!";   
+        else  titleString = "Game Over! | Score :" + EntityCollections.score; 
+        _spriteBatch.DrawString(font, "Press ENTER to start a new game!", new Vector2(GameManager.screenWidth / 10, GameManager.screenHeight / 2), Color.WhiteSmoke);
+        _spriteBatch.DrawString(font, titleString, new Vector2(GameManager.screenWidth / 10, (GameManager.screenHeight / 2) - 100), Color.Red);
+    }
+
+    public static void gameScreen(SpriteBatch _spriteBatch, SpriteFont font) 
+    {
+        EntityCollections.Draw(_spriteBatch);
+        _spriteBatch.DrawString(font, "Score: " + EntityCollections.score, new Vector2(10, 10), Color.White);
+        _spriteBatch.DrawString(font, "Wave: " + WaveManager.wave, new Vector2(GameManager.screenWidth - 200, 10), Color.White);
+        _spriteBatch.DrawString(font, "HP: " + EntityCollections.player.hp, new Vector2(400, 10), Color.White);
+    }
 
 ## Game1.cs
 
