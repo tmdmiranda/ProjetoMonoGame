@@ -129,6 +129,27 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - Nesta classe é que vai ser definida a velocidade das balas quando são disparadas na vertical.
   - O primeiro construtor vai receber a posição inicial e a textura da bala, a textura vai ser atribuida ao campo correspondente na classe que é a pos, e a textura vai ser atribuida ao campo texture, vai ajustar a escala da posição da bala para que a mesma esteja centrada na posição inicial e em seguida vai chamar o método "CreateHitbox" para criar a área de colisão da bala.
   - No método "Update" que vai ser responsável pela a atualização da bala a cada frame, vai mover o projétil na vertical atualizando a sua posição de acordo com a sua velocidade, através de uma verificação se o projétil atingir o limite superior dp ecrã o seu estado vai passar a ser falso para assim o mesmo ser removido do jogo e após isso vai chamar o método "updateHitbox" para atualizar a área de colisão da bala de acordo com a sua nova posição.
+
+## Código
+     //Bullet speed
+     public int BulletSpeed = 8;
+     public Bullet(Vector2 inital, Texture2D image)
+     {
+         texture = image;
+         pos = inital;
+         pos.X -= (texture.Width * GameManager.SCALE) / 2;
+         createHitbox();
+     }
+     public override void Update()
+     {
+         pos.Y -= BulletSpeed;
+         if (pos.Y <= 0)
+         {
+             isActive = false;
+         }
+         //Update hitbox here
+         updateHitbox();
+     }
  
 ## Enemy.cs
 * Herdando a Classe "Entity", podemos criar a classe "Enemy.cs", primeiramente o mais importante será o seu construtor. O construtor é uma peça importante da classe Inimigo, pois permite criar diferentes tipos de inimigos sem ter de reescrever código.
