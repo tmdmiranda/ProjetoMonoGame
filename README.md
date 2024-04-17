@@ -1,6 +1,7 @@
 # Star Shooter Readme
 
 ### Autores do jogo: Alex Jeter and Zachary Mendoza
+### Link repositório: https://github.com/AlexJeter17/MonoGameStarShooter.git
 ### Trabalho realizado por: Tiago Miranda-27937 e Gonçalo Araújo-27928
 
 O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma detalhada e mais simples de como uma pessoa que estivesse a fazer um jogo pela primeira vez em monogame pudesse seguir os passos deles e conseguir criar o seu próprio jogo, onde vai ter de lidar com as Sprites, as classes, os objetos, as colisões, o formato do jogo e até uma forma de ao fim conseguir enviar o seu jogo para os amigos.
@@ -52,6 +53,47 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 * A classe SpriteArt vai ser responsável pela criação das referências desejadas para as sprites, texturas do jogo, música e os efeitos sonoros do jogo.
   - Nesta classe existe uma única função, a função "Load" que vai ser pública e estática e que vai ser através dela que serão carregadas as sprites, texturas e os efeitos sonoros desejados, e os vai atribuir aos objetos criados na classe que como são do tipo "private set" após a sua inicialização os seus valores não podem ser alterados.
 
+## Código
+    //The class name should generally be the same as the file name
+    static class SpriteArt
+    {
+        //Fonts
+        public static SpriteFont font { get; private set; }
+        //Create the texture references here
+        public static Texture2D Player { get; private set; }
+        public static Texture2D Bullet { get; private set; }
+        public static Texture2D EnemyTypeTwo { get; private set; }
+        public static Texture2D EnemyTypeOne { get; private set; }
+        public static Texture2D backGround { get; private set; }
+
+        //Sound and Music References
+        public static Song song { get; private set; }
+        public static SoundEffect shootSound { get; private set; }
+        public static SoundEffect explosion { get; private set; }
+        public static SoundEffect gameOver { get; private set; }
+        public static SoundEffect hpDown { get; private set; }
+
+
+        //Function to load our content
+        public static void Load(ContentManager content)
+        {
+            //Load Font and Sprites
+            font = content.Load<SpriteFont>("File");
+            Player = content.Load<Texture2D>("PlayerShip");
+            EnemyTypeOne = content.Load<Texture2D>("EnemyTier1");
+            EnemyTypeTwo = content.Load<Texture2D>("EnemyTier2");
+            Bullet = content.Load<Texture2D>("Bullet");
+            backGround = content.Load<Texture2D>("StarBackground");
+
+            //Load Songs and SoundEffects
+            song = content.Load<Song>("11_FreeSpaceMusic");
+            explosion = content.Load<SoundEffect>("11_Explosion");
+            shootSound = content.Load<SoundEffect>("11_ShootingNoise");
+            gameOver = content.Load<SoundEffect>("11_GameOver");
+            hpDown = content.Load<SoundEffect>("11_HealthDrop");
+        }
+
+    }
 ## Entity.cs
 * Esta classe é uma classe abstrata que que vai representar todos os objetos do jogo, como: o jogador, os inimigos e as balas, e esta classe vai também tratar das texturas/sprites do player e inimigo como das suas posições durante o jogo e também uma área ao qual chamaram "hitbox" para representar as colisões das entidades.
   - Contém o método "update" que é responsável pela atualização do estado das entidades.
