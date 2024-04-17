@@ -27,6 +27,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - A variável "scale" permite alterar uniformemente a escala dos sprites e dos movimentos. Por defeito, está definida para escalar para 75% do tamanho original do sprite.
   - As variáveis "screenWidth" e "screenHeight" permitem alterar o tamanho da janela da aplicação.
   - Todos estes valores podem ser modificados de acordo com as necessidades para o jogo.
+  - Foram adicionadas também variáveis que vão controlar a vida que os inimigos têm e a velocidade que se vão mover.
 
 ## Código
     static class GameManager
@@ -166,7 +167,6 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   
 ## WaveManager.cs
 * Esta classe vai ser responsável por adicionar os inimigos de forma automática de forma a que não seja necessário adicioná-los manualmente. Vai se certificar da lógica usada para o aparecimento das várias ondas de inimigos no decorrer do jogo ao aumentar o número de inimigos, a taxa de aparecimento e as ondas.
-  - Para começar foram adicionadas variáveis na classe "GameManager" que vai controlar a vida que os inimigos têm e a velocidade que se vão puder mover.
   - Agora já dentro da classe "WaveManager" são criadas e inicializadas 6 variáveis estáticas que são: wave que vai servir para manter a contagem das ondas de inimigos, a spawnRate que vai determinar a frequência com que os inimgos vão ser gerados, a spawnDelay vai controlar o atrasado entre os aparecimentos dos inimigos, a maxNumEnemies vai armazenar o número máximo de inimigos que podem ser gerados numa única onda e a remainingEnemiesToSpawn que vai manter o número de inimigos restantes para serem gerados na onda que o jogo tiver e a variável "Random" para gerar números aleatórios.
   - No método "InitializeWave" que tal como o nome indica vai servir para inicializar uma nova onde de inimigos, vai ser feita uma verificação usando a classe "EntityCollections" para saber se não há inimigos restantes no jogo e se todos os inimigos foram eliminados na onda que o jogo se encontrar, se assim for o número da onda vai ser incrementado e o número máximo de inimigos para a onda seguinte vai ser atualizado e aumentado em 2 unidades.
   - Através do método "Reset" que mais uma vez como o nome indica vai servir para resetar todos os valores que estejam relacionados com as ondas do jogo. Vai ser feita a definição do número da onda como zero, o número de inimigos restantes por gerar também vai ser zero e vai resetar o número máximo de inimigos outra vez para dois.
