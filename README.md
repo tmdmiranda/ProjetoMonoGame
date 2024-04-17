@@ -7,7 +7,7 @@
 O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma detalhada e mais simples de como uma pessoa que estivesse a fazer um jogo pela primeira vez em monogame pudesse seguir os passos deles e conseguir criar o seu próprio jogo, onde vai ter de lidar com as Sprites, as classes, os objetos, as colisões, o formato do jogo e até uma forma de ao fim conseguir enviar o seu jogo para os amigos.
 
 ## Como jogar
-* Teclas:
+* Comandos:
   - Tecla ENTER para iniciar o jogo
   - Tecla A para mover para a esquerda ou tecla seta ESQUERDA
   - Tecla D para mover para a esquerda ou tecla seta DIREITA
