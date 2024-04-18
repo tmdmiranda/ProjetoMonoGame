@@ -103,17 +103,142 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 
     }
 ## Entity.cs
-* Esta classe é uma classe abstrata que que vai representar todos os objetos do jogo, como: o jogador, os inimigos e as balas, e esta classe vai também tratar das texturas/sprites do player e inimigo como das suas posições durante o jogo e também uma área ao qual chamaram "hitbox" para representar as colisões das entidades.
-  - Contém o método "update" que é responsável pela atualização do estado das entidades.
-  - O método "Draw" que vai servir para desenhar as entidades nas suas respetivas posições, com a sua devida cor, escala, e os efeitos de cada.
-  - E foram criados os métodos "createHitBox" e "updateHitBox" em que através do primeiro método vai garantir que cada entidade tenha uma hitbox configurada corretamente para permitir assim a deteção de colisões entre entidades no decorrer do jogo, ele vai criar u retângulo com base na posição e tamanho da textura da entidade, multiplicado pela escala da janela do jogo para assim garantir que a hitbox tenha um tamanho de acordo com o tamanho do ecrã de jogo, e o segundo tal como o nome indica vai ser essencial para garantir a deteção precisa das colisões entre as entidades no jogo, porque ao atualizar de forma contínua a posição da hitbox de acordo com o movimento da entidade vai ser possivel uma deteção mais eficaz das colisões e que as interações entre as mesmas ocorram de acordo com o esperado.
-* Para haver um controlo de todos os recursos que as entidades vão necessitar dentro jogo quando está a ser executado, como os desenhos, as texturas, os autores criaram a classe "EntityCollections.cs", para assim conseguirem lidar e controlar as funcionalidades das entidades quando o jogo está a ser executado, para isso:
-  - Esta classe está responsável por gerir e manipular todas a entidades utilizadas no jogo, incluindo o jogador, os projéteis e pos inimigos e estes vão estar relacionados através das listas estáticas criadas pelos autores do jogo.
-  - Através do método "Initialize" que vai ser responsável por incializar as entidades do jogo, ele vai verificar se essas entidades já foram inicializadas anteriormente para assim evitar múltiplas incializações, se as mesmas ainda não tiverem sido incializadas, vai ser criada uma instância do jogador com a sua textura e sua posição inicial no centro do ecrã de jogo, e após isso é adicionado à lista de entidades através do método "Instantiate" e vai definir a variável global "hasInitialized" como "true", pois ela no inicio do código estava inicializada como "false".
-  - O método "Instantiate" vai ser receber como parâmetro a entidade que vai ser adicionada na lista, por isso o seu papel fundamental é adicionar a nova entidade à lista, ela vai adicionar a entidade à lista "geral" das entidades e depois através de duas verificações, caso seja um projétil vai ser adicionado também à lista dos projéteis e caso seja um inimigo é adicionado na lista dos inimigos.
-  - Com o método "Draw" que vai ser responsável por desenhar as entidades no ecrã do jogo em que vai utilizar um loop for para percorrer as entidades na lista das entidades, e vai chamar o método "Draw" e passar como parâmetro o "SpriteBatch" para desenhar cada entidade no ecrã.
-  - Como já é costume mais uma vez é usado o método "update" que vai ser responsável por atualizar as entidades do jogo, através de um loop for para percorrer a lista das entidades e assim chamar o "update" para atualizar o estado de cada entidade, após essa atualização vai remover das listas todas a entidades que tiverem definidades como falso usando as funções "Where" e "ToList", e com uma verificação vai detetar se ocorreu colisões entre os inimigos e os projéteis para assim realizar a subtração da vida dos inimigos.
-  - O método "ClearEntities" vai ser o método que tal como o nome indica vai limpar todas a entidades do jogo, e para isso vai ser utilizado um loop for para percorrer mais uma vez a lista das entidades e caso seja um inimigo ou projétil o seu estado "isActive" vai definido como falso e vão ser limpos das listas através da função "Clear".
+* A classe Entity é uma classe abstrata que serve como base para todos os objetos do jogo, como jogador, inimigos e projéteis. Ela lida com as texturas, posições e hitboxes das entidades. Os métodos principais incluem:
+ - Update(): Atualiza o estado das entidades a cada frame do jogo.
+ - Draw(): Desenha as entidades no ecrã com suas texturas, posições e efeitos.
+ - createHitbox(): Cria a hitbox da entidade com base na sua posição, tamanho da textura e escala do jogo.
+ - updateHitbox(): Atualiza continuamente a posição da hitbox de acordo com o movimento da entidade para permitir detecções precisas das colisões.
+
+## Código
+     protected Texture2D texture;
+     public Vector2 pos;
+     public bool isActive = true;
+
+     public Rectangle hitbox;
+
+     //Abstract Methods
+     public abstract void Update();
+
+
+     //Common Draw Method
+     public virtual void Draw(SpriteBatch spriteBatch)
+     {
+         spriteBatch.Draw(
+             texture,                        //Texture
+             pos,                            //Position
+             null,                           //What portion of the sprite to draw (Default Draws whole sprite)
+             Color.White,                           //Tint Color
+             0f,                             //Rotation
+             Vector2.Zero,                   //Origin
+             GameManager.SCALE,       //Scale
+             SpriteEffects.None,             //Effects
+             0f);                            //Z-Layer
+     }
+
+     public virtual void createHitbox()
+     {
+         hitbox = new Rectangle((int)pos.X, (int)pos.Y, (int)(texture.Width * GameManager.SCALE), (int)(texture.Height * GameManager.SCALE));
+     }
+
+     public virtual void updateHitbox()
+     {
+         hitbox.X = (int)pos.X;
+         hitbox.Y = (int)pos.Y;
+     }
+
+## EntityCollections.cs
+* Por sua vez, a classe EntityCollections é responsável por gerenciar todas as entidades do jogo durante a sua execução. Ela mantém listas estáticas de entidades, projéteis e inimigos. Os seus principais métodos são:
+ - Initialize(): Inicializa as entidades do jogo, cria uma instância do jogador e adiciona-o à lista das entidades, para evitar múltiplas inicializações.
+ - Instantiate(Entity entity): Adiciona uma nova entidade à lista geral das entidades e, conforme o tipo de entidade, adiciona também à lista de projéteis ou inimigos.
+ - Draw(SpriteBatch spriteBatch): Desenha todas as entidades no ecrã.
+ - Update(): Atualiza o estado das entidades, remove as entidades desativadas da lista e verifica as colisões entre inimigos e projéteis.
+ - ClearEntities(): Limpa todas as entidades do jogo, define o estado isActive como falso para os inimigos e projéteis e remove-os da lista.
+
+## Código
+ static class EntityCollections
+ 
+     //From Part 4
+     static List<Entity> entities = new List<Entity>();
+     static List<Bullet> bullets = new List<Bullet>();
+     //The enemy list to add
+     public static List<Enemy> enemies = new List<Enemy>();
+
+     //New Variables and Method
+     public static Player player;
+
+     public static int score = 0;
+
+
+     public static bool hasInitialized = false;
+
+     public static void Initialize()
+     {
+         if (hasInitialized == false)
+         {
+             player = new Player(SpriteArt.Player, new Vector2(GameManager.screenWidth / 2, GameManager.screenHeight - 200));
+             Instantiate(player);
+             hasInitialized = true;
+         }
+     }
+     public static void Instantiate(Entity entity)
+     {
+         entities.Add(entity);
+         if (entity is Bullet) bullets.Add(entity as Bullet);
+         else if (entity is Enemy) enemies.Add(entity as Enemy);
+     }
+     public static void Draw(SpriteBatch spriteBatch)
+     {
+         for (int i = 0; i < entities.Count; i++)
+         {
+             entities[i].Draw(spriteBatch);
+         }
+     }
+
+     public static void Update()
+     {
+         //From part 4
+         for (int i = 0; i < entities.Count; i++)
+         {
+             entities[i].Update();
+         }
+
+         //If any entities have isActive set to false, remove them from the lists
+         entities = entities.Where(obj => obj.isActive).ToList();
+         bullets = bullets.Where(obj => obj.isActive).ToList();
+         enemies = enemies.Where(obj => obj.isActive).ToList();
+
+         for (int i = 0; i < enemies.Count; i++)
+         {
+             for (int j = 0; j < bullets.Count; j++)
+             {
+                 //Check if any of the enemies or bullets collide with each other
+                 if (bullets[j].hitbox.Intersects(enemies[i].hitbox))
+                 {
+                     //Subtract enemy health by one, remove bullet
+                     //enemies[i].health -= 1;
+                     enemies[i].OnHit();
+                     bullets[j].isActive = false;
+                 }
+             }
+         }
+
+
+
+     }
+
+     public static void ClearEntities()
+     {
+
+         for (int i = 0; i < entities.Count; i++)
+         {
+             if (entities[i] is Enemy || entities[i] is Bullet)
+             {
+                 entities[i].isActive = false;
+             }
+         }
+         enemies.Clear();
+         bullets.Clear();
+     }
 
 ## Colisões e Hitboxes
   -  A ideia de adicionar colisões é criar caixas em torno do sprite que determinam a área de colisão, sempre que essas duas caixas se sobrepuserem, uma função será chamada e qualquer lógica relacionada a colisões será aplicada.
