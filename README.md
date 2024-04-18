@@ -241,12 +241,58 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
       - Com o tint definido em todas as entidade, quando a colisão é observada, é chamada a função onHit e onHitEffect. o cooldown é definido, e durante a duração desse cooldown a função Effect aplica o knockback e o muda a cor do sprite para vermelho.
 
 ## Player.cs
-* Como a classe anterior foi criada como uma classe abstrata, agora nesta classe usaram alguns métodos e funções dessa classe, neste caso o player vai herdar as texturas e a posição entre outros.
-* A classe player vai ter os campos "sidespeed" que vai ser usado para determinar a velocidade com que o player se move na horizontal neste caso para a esquerda ou para a direita e essa variavél está declarada no "GameManager", o campo "cooldownRemaining" que vai controlar o tempo restante entre cada disparo do player, o campo "fireRate" que vai definir a taxa de tiros que são necessários entre cada tiro, e o campo "hp" que como toda a gente que joga videojogos sabe que isso se refere à vida do player, que no caso de chegar a 0 o jogo vai encerrar e dar uma mensagem de gameover.
-* O construtor player vai receber os parâmetros da textura do jogador através do "image" e a sua posição inicial através do "initialPosition".
-* No método update, primeiro os criadores fizeram uma verificação da hp do player, que se a mesma for menor ou igual a 0, o jogo vai acabar, vai dar display da sprite do gameover e também vai dar a música que foi definida para esse momento.
-* Após isso, fazem as verificações para o movimento do player dentro do jogo, definem as teclas para o movimento como a tecla "A" e "LEFT" para o player ir para a esquerda caso sejam pressionadas e dentro dessa verificação fazem uma outra para o player não sair fora da janela de jogo e ir atualizando a sua posição, e repetem o mesmo processo para o movimento para a direita, mas para esse atribuiram as teclas "D" e "RIGHT".
-* E ainda fazem mais uma verificação para quando o player for disparar os projéteis e o tempo de cooldown o permitir, em que a tecla definida para o disparo foi o "SPACE", e sempre que o cooldown o permitir vai ser criado um novo projétil na posição do jogador e seja assim disparado e após isso o tempo de cooldown vai ser reiniciado permitindo assim ao player disparar em intervalos de tempo regulares, e sempre que houver um disparo o seu som também vai ser reproduzido.
+* A classe Player herda da classe Entity, o que significa que ela recebe todos os comportamentos e propriedades definidos na classe Entity. Neste caso, o jogador terá acesso às texturas, posições e métodos de desenho e atualização definidos na classe Entity.
+* Os campos da classe Player são:
+  - sideSpeed: Determina a velocidade de movimento horizontal do jogador, para a esquerda ou para a direita.
+  - cooldownRemaining: Controla o tempo restante entre cada disparo do jogador.
+  - fireRate: Define a taxa de disparo do jogador, ou seja, o número de tiros necessários entre cada disparo.
+  - hp: Representa a vida do jogador. Se a vida chegar a 0, o jogo acaba.
+* O construtor Player(Texture2D image, Vector2 initialPosition) recebe a textura do jogador e sua posição inicial como parâmetros e inicializa os campos da classe com esses valores.
+* No método Update(), primeiro verifica se a vida do jogador é menor ou igual a 0. Se for, o jogo termina, exibindo a sprite de game over e reproduz a música correspondente.
+* Em seguida, o método verifica se as teclas pressionadas pelo jogador para movimentá-lo para a esquerda (teclas A ou LEFT) ou para a direita (teclas D ou RIGHT) estão a ser pressionadas e garante também que o jogador não sai da janela de jogo ao atualizar a sua posição.
+* Finalmente, o método verifica se a tecla de disparo (espaço) foi pressionada e se o tempo de cooldown permite um novo disparo. Se sim, cria um novo projétil na posição do jogador e reinicia o tempo de cooldown, permitindo disparos regulares. Além disso, reproduz o som do disparo.
+
+## Código
+     // HEALTH CHECK 
+     if (hp <= 0)
+     {
+         GameManager.inGame = false;
+         SpriteArt.gameOver.Play(0.5f, 0.0f, 0.0f);
+         hp = GameManager.playerHealth;
+         MediaPlayer.Play(SpriteArt.song);
+     }
+     //Keyboard Controls
+     //Side to Side Movement
+     //Moving Left
+     if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
+     {
+         //Constraint so that it can't move outside the window
+         if (pos.X > 0)
+         {
+             pos.X -= sideSpeed;
+         }
+     }
+     //Moving Right
+     if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
+     {
+         //Constraint
+         if (pos.X < GameManager.screenWidth - (texture.Width * GameManager.SCALE))
+         {
+             pos.X += sideSpeed;
+         }
+     }
+     if (Keyboard.GetState().IsKeyDown(Keys.Space) && cooldownRemaining <= 0)
+     {
+         Vector2 projectileSpawn = new Vector2(pos.X + ((texture.Width * GameManager.SCALE) / 2), pos.Y);
+         cooldownRemaining = fireRate;
+         EntityCollections.Instantiate(new Bullet(projectileSpawn, SpriteArt.Bullet));
+
+         SpriteArt.shootSound.Play(0.25f, 0.0f, 0.0f);
+     }
+     if (cooldownRemaining > 0)
+     {
+         cooldownRemaining--;
+     }
 
 ## Bullet.cs
 * A classe "Bullet" vai herdar a classe "Entity" e com isso também vai estar de certa forma ligada com a classe "EntityCollections", pois na classe "Bullet" ao serem adicionados novos projéteis os mesmos têm de ser adicionados à sua respetiva lista durante o decorrer do jogo, com a herdade da classe "Entity" a classe "Bullet" vai assim herdar as características de todas as entidades do jogo tal como a sua textura, a sua posição e os seus métodos de atualização e desenho no ecrã.
@@ -320,7 +366,6 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
     }
 
 ## Game1.cs
-
 * Esta é a classe principal do jogo que herda a classe "game" proveniente do monogame, vai ser nesta classe que vai conter os métodos para inicializações, carregar algum tipo de contéudo, atualização e para a arte do jogo.
   - Dentro da classe, existem dois campos privados: "private GraphicsDeviceManager _graphics" que vai fazer o gerenciamento da exibição gráfica do jogo e "private SpriteBatch _spriteBatch" que vai fazer o gerenciamento para carregar as sprites para o jogo.
   - No construtor Game1 vai ser usado para inicializar o jogo através da configuração dos dispositivos gráficos, pois ele vai definir o diretório do conteúdo para o carregamento dos recursos e vai tornar o mouse visível, e através do "GameManager.cs" vai controlar o tamanho da janela do jogo com medidas já inicializadas.
