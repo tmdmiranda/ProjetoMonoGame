@@ -521,15 +521,14 @@ public virtual void updateHitbox()
             if (spawnDelay > 0) spawnDelay--;
         }
     }
-}
-    ```
 
 ## UserInterface.cs
 * Vai ser responsável por fazer a interface do user no jogo, através de dois métodos:
-  - HomeScreen e o gameScreen, o método HomneScreen vai exibir a sprite que aparece antes do jogo iniciar se o jogo ainda não tiver iniciado vai ser exibida uma mensagem para o jogador pressionar a tecla "ENTER" para o iniciar, o método gameScreen vai exibir o ecrã de jogo enquanto o mesmo está a decorrer mostrando assim a interface do jogo como a vida do player, o número da wave em que se encontra e o seu score, obtém as informações sobre o score do player através da classe "EntityCollections" e o número da onda através do "WaveManager".
-    ## Código
-    ```csharp
-     static class UserInterface
+  - HomeScreen e o gameScreen, o método HomeScreen vai exibir a sprite que aparece antes do jogo iniciar se o jogo ainda não tiver iniciado vai ser exibida uma mensagem para o jogador pressionar a tecla "ENTER" para o iniciar, o método gameScreen vai exibir o ecrã de jogo enquanto o mesmo está a decorrer mostrando assim a interface do jogo como a vida do player, o número da wave em que se encontra e o seu score, obtém as informações sobre o score do player através da classe "EntityCollections" e o número da onda através do "WaveManager".
+
+## Código
+```csharp
+static class UserInterface
     {
         public static bool hasStarted = false;
         private static string titleString = "My First Game!";
@@ -548,27 +547,6 @@ public virtual void updateHitbox()
             _spriteBatch.DrawString(font, "Wave: " + WaveManager.wave, new Vector2(GameManager.screenWidth - 200, 10), Color.White);
             _spriteBatch.DrawString(font, "HP: " + EntityCollections.player.hp, new Vector2(400, 10), Color.White);
         }
-    }
-    ```
-
-## Código
-```csharp
-    public static bool hasStarted = false;
-    private static string titleString = "My First Game!";
-    public static void HomeScreen(SpriteBatch _spriteBatch, SpriteFont font)
-    {
-        if (!hasStarted) titleString = "My First Game!";   
-        else  titleString = "Game Over! | Score :" + EntityCollections.score; 
-        _spriteBatch.DrawString(font, "Press ENTER to start a new game!", new Vector2(GameManager.screenWidth / 10, GameManager.screenHeight / 2), Color.WhiteSmoke);
-        _spriteBatch.DrawString(font, titleString, new Vector2(GameManager.screenWidth / 10, (GameManager.screenHeight / 2) - 100), Color.Red);
-    }
-
-    public static void gameScreen(SpriteBatch _spriteBatch, SpriteFont font) 
-    {
-        EntityCollections.Draw(_spriteBatch);
-        _spriteBatch.DrawString(font, "Score: " + EntityCollections.score, new Vector2(10, 10), Color.White);
-        _spriteBatch.DrawString(font, "Wave: " + WaveManager.wave, new Vector2(GameManager.screenWidth - 200, 10), Color.White);
-        _spriteBatch.DrawString(font, "HP: " + EntityCollections.player.hp, new Vector2(400, 10), Color.White);
     }
 ```
 ## Game1.cs
