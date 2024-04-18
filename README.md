@@ -103,7 +103,8 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 
     }
 ## Entity.cs
-* A classe Entity é uma classe abstrata que serve como base para todos os objetos do jogo, como jogador, inimigos e projéteis. Ela lida com as texturas, posições e hitboxes das entidades. Os métodos principais incluem:
+* A classe Entity é uma classe abstrata que serve como base para todos os objetos do jogo, como jogador, inimigos e projéteis. Ela lida com as texturas, posições e hitboxes das entidades.
+* Os métodos principais incluem:
  - Update(): Atualiza o estado das entidades a cada frame do jogo.
  - Draw(): Desenha as entidades no ecrã com suas texturas, posições e efeitos.
  - createHitbox(): Cria a hitbox da entidade com base na sua posição, tamanho da textura e escala do jogo.
@@ -144,7 +145,8 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
      }
 
 ## EntityCollections.cs
-* Por sua vez, a classe EntityCollections é responsável por gerenciar todas as entidades do jogo durante a sua execução. Ela mantém listas estáticas de entidades, projéteis e inimigos. Os seus principais métodos são:
+* A classe EntityCollections é responsável pelo gerenciamento de todas as entidades durante o decorrer do jogo. Ela vai criar listas estáticas de entidades, projéteis e inimigos.
+* Os seus principais métodos são:
  - Initialize(): Inicializa as entidades do jogo, cria uma instância do jogador e adiciona-o à lista das entidades, para evitar múltiplas inicializações.
  - Instantiate(Entity entity): Adiciona uma nova entidade à lista geral das entidades e, conforme o tipo de entidade, adiciona também à lista de projéteis ou inimigos.
  - Draw(SpriteBatch spriteBatch): Desenha todas as entidades no ecrã.
