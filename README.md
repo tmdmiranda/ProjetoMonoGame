@@ -113,12 +113,9 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
      protected Texture2D texture;
      public Vector2 pos;
      public bool isActive = true;
-
      public Rectangle hitbox;
-
      //Abstract Methods
      public abstract void Update();
-
 
      //Common Draw Method
      public virtual void Draw(SpriteBatch spriteBatch)
@@ -167,8 +164,6 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
      public static Player player;
 
      public static int score = 0;
-
-
      public static bool hasInitialized = false;
 
      public static void Initialize()
@@ -221,14 +216,10 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
                  }
              }
          }
-
-
-
      }
 
      public static void ClearEntities()
      {
-
          for (int i = 0; i < entities.Count; i++)
          {
              if (entities[i] is Enemy || entities[i] is Bullet)
