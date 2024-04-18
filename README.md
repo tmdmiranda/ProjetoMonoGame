@@ -37,6 +37,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - Foram adicionadas também variáveis que vão controlar a vida que os inimigos têm e a velocidade que se vão mover.
 
 ## Código
+```csharp
     static class GameManager
     {
         public static float SCALE = 0.75f;
@@ -56,12 +57,13 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 
         public static bool inGame = false;
     }
-
+```
 ## SpriteArt.cs
 * A classe SpriteArt vai ser responsável pela criação das referências desejadas para as sprites, texturas do jogo, música e os efeitos sonoros do jogo.
   - Nesta classe existe uma única função, a função "Load" que vai ser pública e estática e que vai ser através dela que serão carregadas as sprites, texturas e os efeitos sonoros desejados, e os vai atribuir aos objetos criados na classe que como são do tipo "private set" após a sua inicialização os seus valores não podem ser alterados.
 
 ## Código
+  ```csharp
     //The class name should generally be the same as the file name
     static class SpriteArt
     {
@@ -102,6 +104,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
         }
 
     }
+  ```
 ## Entity.cs
 * A classe Entity é uma classe abstrata que serve como base para todos os objetos do jogo, como jogador, inimigos e projéteis. Ela lida com as texturas, posições e hitboxes das entidades.
 * Os métodos principais incluem:
@@ -111,6 +114,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
  - updateHitbox(): Atualiza continuamente a posição da hitbox de acordo com o movimento da entidade para permitir detecções precisas das colisões.
 
 ## Código
+  ```csharp
      protected Texture2D texture;
      public Vector2 pos;
      public bool isActive = true;
@@ -143,7 +147,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
          hitbox.X = (int)pos.X;
          hitbox.Y = (int)pos.Y;
      }
-
+  ```
 ## EntityCollections.cs
 * A classe EntityCollections é responsável pelo gerenciamento de todas as entidades durante o decorrer do jogo. Ela vai criar listas estáticas de entidades, projéteis e inimigos.
 * Os seus principais métodos são:
@@ -154,6 +158,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
  - ClearEntities(): Limpa todas as entidades do jogo, define o estado isActive como falso para os inimigos e projéteis e remove-os da lista.
 
 ## Código
+```csharp
  static class EntityCollections
  
      //From Part 4
@@ -232,15 +237,52 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
          enemies.Clear();
          bullets.Clear();
      }
-
+```
 ## Colisões e Hitboxes
   -  A ideia de adicionar colisões é criar caixas em torno do sprite que determinam a área de colisão, sempre que essas duas caixas se sobrepuserem, uma função será chamada e qualquer lógica relacionada a colisões será aplicada.
   -  Para aplicar a lógica das hitboxes, a classe entity vai possuir no seu construtor a hitbox, e terá duas funções onde criará a hitbox e a vai atualizar de acordo com a posição da entindade que a possui.
   -  As dimensões da hitbox vão ser definidas automaticamente pelas dimensões da sprite.
   -  Após isso, dentro dos Construtores dos objetos que queremos que possuam uma hitbox, chama a função para criar a hitbox, e na respetiva função update será chamado a funcão para dar update à posição dela de acordo com a posição da entidade.
+    ## Código
+ ```csharp
+    public virtual void createHitbox()
+{
+    hitbox = new Rectangle((int)pos.X, (int)pos.Y, (int)(texture.Width * GameManager.SCALE), (int)(texture.Height * GameManager.SCALE));
+}
+ ```
   - Com isso, a função que verifica se hã colisões pode ser chamada no update, esta funciona iterando a verificar se alguma das hitboxes existentes colidiram. Assim, podemos subtraír a vida sempre que há uma colisão entre a bala e um inimigo, e com isso adicionar também os efeitos de colisão
+  ```csharp
+public virtual void updateHitbox()
+{
+    hitbox.X = (int)pos.X;
+    hitbox.Y = (int)pos.Y;
+}
+  ```
   - Efeitos de Colisão vão ser aplicados primeiramente definindo na class "Entity.cs", a cooldown do hit "hitCooldown", as frames que o "hitFrames" "Hit" dura, a distância de knockback que o inimigo leva "hitKnockbackMultiplier" e o "ColorTint" que vai definir a cor predefinida do sprite, esta sendo branca.
       - Com o tint definido em todas as entidade, quando a colisão é observada, é chamada a função onHit e onHitEffect. o cooldown é definido, e durante a duração desse cooldown a função Effect aplica o knockback e o muda a cor do sprite para vermelho.
+        ### OnHit()
+        ```csharp
+        public void OnHit() 
+        {
+          health -= 1;
+          hitCooldown = hitFrames;
+          pos.Y -= dropSpeed * knockbackMultiplier;
+        }
+        ```
+        ```csharp
+        private void OnHitEffect()
+        {
+          if (hitCooldown >= 0)
+          {
+            hitCooldown -= 1;
+            tint = Color.Red;
+          }
+          else
+          {
+            tint = Color.White;
+          }
+        }
+        
 
 ## Player.cs
 * A classe Player herda da classe Entity, o que significa que ela recebe todos os comportamentos e propriedades definidos na classe Entity. Neste caso, o jogador terá acesso às texturas, posições e métodos de desenho e atualização definidos na classe Entity.
@@ -255,6 +297,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 * Finalmente, o método verifica se a tecla de disparo (espaço) foi pressionada e se o tempo de cooldown permite um novo disparo. Se sim, cria um novo projétil na posição do jogador e reinicia o tempo de cooldown, permitindo disparos regulares. Além disso, reproduz o som do disparo.
 
 ## Código
+```csharp
      // HEALTH CHECK 
      if (hp <= 0)
      {
@@ -295,7 +338,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
      {
          cooldownRemaining--;
      }
-
+```
 ## Bullet.cs
 * A classe "Bullet" vai herdar a classe "Entity" e com isso também vai estar de certa forma ligada com a classe "EntityCollections", pois na classe "Bullet" ao serem adicionados novos projéteis os mesmos têm de ser adicionados à sua respetiva lista durante o decorrer do jogo, com a herdade da classe "Entity" a classe "Bullet" vai assim herdar as características de todas as entidades do jogo tal como a sua textura, a sua posição e os seus métodos de atualização e desenho no ecrã.
   - Nesta classe é que vai ser definida a velocidade das balas quando são disparadas na vertical.
@@ -303,6 +346,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - No método "Update" que vai ser responsável pela a atualização da bala a cada frame, vai mover o projétil na vertical atualizando a sua posição de acordo com a sua velocidade, através de uma verificação se o projétil atingir o limite superior dp ecrã o seu estado vai passar a ser falso para assim o mesmo ser removido do jogo e após isso vai chamar o método "updateHitbox" para atualizar a área de colisão da bala de acordo com a sua nova posição.
 
 ## Código
+```csharp
      //Bullet speed
      public int BulletSpeed = 8;
      public Bullet(Vector2 inital, Texture2D image)
@@ -322,7 +366,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
          //Update hitbox here
          updateHitbox();
      }
- 
+ ```
 ## Enemy.cs
 * Herdando a Classe "Entity", podemos criar a classe "Enemy.cs", primeiramente o mais importante será o seu construtor. O construtor é uma peça importante da classe Inimigo, pois permite criar diferentes tipos de inimigos sem ter de reescrever código.
   - O construtor recebe quatro parâmetros e executa as seguintes ações:
@@ -330,10 +374,75 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
     - Recebe uma imagem para usar como textura (texture).
     - Define uma nova velocidade de movimento para o inimigo (dropSpeed).
     - Define a quantidade máxima de pontos de vida do inimigo (health).
+    ## Código
+      ```csharp
+      class Enemy : Entity
+      {
+        public int health = 2;
+        protected float dropSpeed = (1 * GameManager.SCALE);
+
+
+        //Variables that control OnHit effects
+        protected Color tint = Color.White;
+        private int hitCooldown = 0;
+        private int hitFrames = 10;
+        private int knockbackMultiplier = 3;
+        
+        public Enemy(int width, Texture2D image, float newSpeed, int healthPoints)
+        {
+            //From Part 4
+            pos = new Vector2(width, 0);
+            texture = image;
+            dropSpeed = newSpeed;
+            health = healthPoints;
+            //Create the hitbox for the Enemy object
+            createHitbox();
+        }
+      }
+      ```
 * Para além disso, o "Enemy" terá de se deslocar para baixo no espaço, para isso ele segue um simples Update:
     - Primeiro, ele verifica se a vida atual é igual a 0. Se for, o inimigo remove-se a si próprio.
     - De seguida, verificamos se o Inimigo está fora do campo de jogo enquanto se move para baixo. Se estiver, remove-se a si próprio.
     - Por fim, a posição do Inimigo é atualizada somando a velocidade à sua posição para continuar o seu movimento descendente.
+    ## Código
+    ```csharp
+            public override void Update()
+        {
+            //When Health is 0, remove itself
+            if (health <= 0)
+            {
+                EntityCollections.score += ((int)dropSpeed - 1);
+                SpriteArt.explosion.Play(0.7f, 0.0f, 0.0f);
+                isActive = false;
+            }
+            //When the Enemy reaches the edge of screen, remove itself
+            if (pos.Y >= GameManager.screenHeight)
+            {
+                SpriteArt.hpDown.Play(0.25f, 0.0f, 0.0f);
+                isActive = false;
+                EntityCollections.player.hp -= 1;
+            }
+            //Apply movement to the Enemy by updating its position
+            pos.Y += dropSpeed;
+            //Update hitbox every frame
+            updateHitbox();
+            OnHitEffect();
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(
+                texture,                        //Texture
+                pos,                            //Position
+                null,                           //What portion of the sprite to draw (Default Draws whole sprite)
+                tint,                           //Tint Color
+                0f,                             //Rotation
+                Vector2.Zero,                   //Origin
+                GameManager.SCALE,       //Scale
+                SpriteEffects.None,             //Effects
+                0f);
+        }
+    ```
 - De seguida a classe "Enemy" será instanciada da mesma forma que a classe "Bullet" no "EntityCollections.cs" para poder ter um maior controlo dos inimigos.
   
 ## WaveManager.cs
@@ -342,13 +451,108 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
   - No método "InitializeWave" que tal como o nome indica vai servir para inicializar uma nova onde de inimigos, vai ser feita uma verificação usando a classe "EntityCollections" para saber se não há inimigos restantes no jogo e se todos os inimigos foram eliminados na onda que o jogo se encontrar, se assim for o número da onda vai ser incrementado e o número máximo de inimigos para a onda seguinte vai ser atualizado e aumentado em 2 unidades.
   - Através do método "Reset" que mais uma vez como o nome indica vai servir para resetar todos os valores que estejam relacionados com as ondas do jogo. Vai ser feita a definição do número da onda como zero, o número de inimigos restantes por gerar também vai ser zero e vai resetar o número máximo de inimigos outra vez para dois.
   - Com o método "Update" que vai ser chamado a cada frame do jogo para atualizar o gerenciamento das ondas, vai chamar o método criado "InitializeWave" para iniciar uma nova onda se necessário, em seguida verifica se o "spawnDelay" é zero e se não há mais inimigos por gerar, se isso se verificar, é usada uma outra verificação para gerar os inimigos em que todos os que forem par são inimigos nível 1 e os inimigos com número ímpar são nível 2, ao gerar o inimgo vai subtrair um nos inimigos por gerar e de seguida gera o inimigo através do "EntityCollections" de acordo com o seu nível e vai resetar o "spawnDelay" para o "spawnRate", e através de outra verificação se o "spawnDelay" não for zero vai ser subtraido um. Vai repetir esse processo a cada frame de forma a garantir que todos os inimigos sejam gerados de acordo com as configuarções já definidas.
+    ## Codigo
+    ```csharp
+        static class WaveManager
+    {
+        public static int wave = 0;
+
+        static int spawnRate = 50;
+        static int spawnDelay = 0;
+        static int maxNumEnemies = 0;
+        static int remainingEnemiesToSpawn = 0;
+
+        static Random random = new Random();
+
+        public static void InitializeWave()
+        {
+            if (EntityCollections.enemies.Count == 0 && remainingEnemiesToSpawn == 0)
+            {
+                wave += 1;
+                remainingEnemiesToSpawn += maxNumEnemies;
+                maxNumEnemies += 2;
+            }
+        }
+        public static void Reset()
+        {
+            wave = 0;
+            remainingEnemiesToSpawn = 0;
+            maxNumEnemies = 2;
+        }
+
+        public static void Update()
+        {
+            //The method that you created earlier
+            InitializeWave();
+            //Spawning logic
+            //First check if the spawn delay is 0 and 
+            //that there are no enemies left to spawn form current wave
+            if (spawnDelay <= 0 && remainingEnemiesToSpawn != 0)
+            {
+                //Every even enemy is a level 1 enemy, every odd enemy is a level 2 enemy
+                if (remainingEnemiesToSpawn % 2 == 0)
+                {
+                    //Subtract 1 from remaining enemies, then spawn the enemy object using EntityManager
+                    remainingEnemiesToSpawn -= 1;
+
+                    //Spawn enemy using the Instantiate method from EntityManager
+                    EntityCollections.Instantiate(new Enemy(
+                        random.Next(128, (GameManager.screenWidth - 128)),    //Position to Spawn Enemy
+                        SpriteArt.EnemyTypeOne,                              //Texture for the Enemy
+                        GameManager.level1Speed,                             //Speed of the Enemy
+                        GameManager.level1Health                             //Health of the Enemy
+                    ));
+                }
+                else
+                {
+                    remainingEnemiesToSpawn -= 1;
+                    EntityCollections.Instantiate(new Enemy(
+                        random.Next(128, (GameManager.screenWidth - 128)),
+                        SpriteArt.EnemyTypeTwo,
+                        GameManager.level2Speed,
+                        GameManager.level2Health
+                    ));
+                }
+                //Reset the spawn delay to the spawn rate.
+                spawnDelay = spawnRate;
+
+            }
+            //If the spawn delay is not 0, subtract 1 from it.
+            if (spawnDelay > 0) spawnDelay--;
+        }
+    }
+}
+    ```
 
 ## UserInterface.cs
 * Vai ser responsável por fazer a interface do user no jogo, através de dois métodos:
   - HomeScreen e o gameScreen, o método HomneScreen vai exibir a sprite que aparece antes do jogo iniciar se o jogo ainda não tiver iniciado vai ser exibida uma mensagem para o jogador pressionar a tecla "ENTER" para o iniciar, o método gameScreen vai exibir o ecrã de jogo enquanto o mesmo está a decorrer mostrando assim a interface do jogo como a vida do player, o número da wave em que se encontra e o seu score, obtém as informações sobre o score do player através da classe "EntityCollections" e o número da onda através do "WaveManager".
+    ## Código
+    ```csharp
+     static class UserInterface
+    {
+        public static bool hasStarted = false;
+        private static string titleString = "My First Game!";
+        public static void HomeScreen(SpriteBatch _spriteBatch, SpriteFont font)
+        {
+            if (!hasStarted) titleString = "My First Game!";   
+            else  titleString = "Game Over! | Score :" + EntityCollections.score; 
+            _spriteBatch.DrawString(font, "Press ENTER to start a new game!", new Vector2(GameManager.screenWidth / 10, GameManager.screenHeight / 2), Color.WhiteSmoke);
+            _spriteBatch.DrawString(font, titleString, new Vector2(GameManager.screenWidth / 10, (GameManager.screenHeight / 2) - 100), Color.Red);
+        }
+
+        public static void gameScreen(SpriteBatch _spriteBatch, SpriteFont font) 
+        {
+            EntityCollections.Draw(_spriteBatch);
+            _spriteBatch.DrawString(font, "Score: " + EntityCollections.score, new Vector2(10, 10), Color.White);
+            _spriteBatch.DrawString(font, "Wave: " + WaveManager.wave, new Vector2(GameManager.screenWidth - 200, 10), Color.White);
+            _spriteBatch.DrawString(font, "HP: " + EntityCollections.player.hp, new Vector2(400, 10), Color.White);
+        }
+    }
+    ```
 
 ## Código
-
+```csharp
     public static bool hasStarted = false;
     private static string titleString = "My First Game!";
     public static void HomeScreen(SpriteBatch _spriteBatch, SpriteFont font)
@@ -366,7 +570,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
         _spriteBatch.DrawString(font, "Wave: " + WaveManager.wave, new Vector2(GameManager.screenWidth - 200, 10), Color.White);
         _spriteBatch.DrawString(font, "HP: " + EntityCollections.player.hp, new Vector2(400, 10), Color.White);
     }
-
+```
 ## Game1.cs
 * Esta é a classe principal do jogo que herda a classe "game" proveniente do monogame, vai ser nesta classe que vai conter os métodos para inicializações, carregar algum tipo de contéudo, atualização e para a arte do jogo.
   - Dentro da classe, existem dois campos privados: "private GraphicsDeviceManager _graphics" que vai fazer o gerenciamento da exibição gráfica do jogo e "private SpriteBatch _spriteBatch" que vai fazer o gerenciamento para carregar as sprites para o jogo.
