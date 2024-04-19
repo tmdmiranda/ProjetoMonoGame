@@ -249,7 +249,7 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
     hitbox = new Rectangle((int)pos.X, (int)pos.Y, (int)(texture.Width * GameManager.SCALE), (int)(texture.Height * GameManager.SCALE));
 }
  ```
-  - Com isso, a função que verifica se hã colisões pode ser chamada no update, esta funciona iterando a verificar se alguma das hitboxes existentes colidiram. Assim, podemos subtraír a vida sempre que há uma colisão entre a bala e um inimigo, e com isso adicionar também os efeitos de colisão
+  - Com isso, a função que verifica se há colisões pode ser chamada no update, esta funciona iterando a verificar se alguma das hitboxes existentes colidiram. Assim, podemos subtraír a vida sempre que há uma colisão entre a bala e um inimigo, e com isso adicionar também os efeitos de colisão
   ```csharp
 public virtual void updateHitbox()
 {
