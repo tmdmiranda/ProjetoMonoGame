@@ -8,10 +8,10 @@ O grande objetivo dos autores do desenvolvimento deste jogo era mostrar de forma
 
 ## Como jogar
 * Comandos:
-  - Tecla ENTER para iniciar o jogo
-  - Tecla A para mover para a esquerda ou tecla seta ESQUERDA
-  - Tecla D para mover para a esquerda ou tecla seta DIREITA
-  - Tecla SPACE para disparar
+  - Tecla ENTER para iniciar o jogo;
+  - Tecla A ou tecla seta ESQUERDA para mover para a esquerda;
+  - Tecla D ou tecla seta DIREITA para mover para direita;
+  - Tecla SPACE para disparar.
 
 ### Estruturamento do projeto
 
